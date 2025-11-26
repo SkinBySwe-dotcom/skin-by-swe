@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWE株式会社 - エステティックサロン・各種サービス</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        nav {
+            background: #fff;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #2c5f4f;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #1a3d30;
+        }
+        
+        nav a.active {
+            color: #1a3d30;
+            border-bottom: 3px solid #2c5f4f;
+            padding-bottom: 5px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #2c5f4f 0%, #3d7a63 100%);
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            color: #2c5f4f;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #2c5f4f;
+        }
+
+        h3 {
+            color: #2c5f4f;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .business-list {
+            background: #f8f9f8;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .business-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .business-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .business-list li:last-child {
+            border-bottom: none;
+        }
+
+        .business-list li:before {
+            content: "■ ";
+            color: #2c5f4f;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background: white;
+        }
+
+        .history-table td {
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        .history-table td:first-child {
+            background: #f8f9f8;
+            font-weight: 600;
+            width: 200px;
+            color: #2c5f4f;
+        }
+
+        .info-box {
+            background: #f8f9f8;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            border-left: 4px solid #2c5f4f;
+        }
+
+        .info-box p {
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+        }
+
+        .info-box strong {
+            color: #2c5f4f;
+            display: inline-block;
+            min-width: 150px;
+        }
+
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c5f4f;
+            font-weight: 600;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #2c5f4f;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button {
+            background: #2c5f4f;
+            color: white;
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: #1a3d30;
+        }
+
+        footer {
+            background: #1a3d30;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid #2c5f4f;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            color: #2c5f4f;
+            margin-top: 0;
+            font-size: 1.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+            }
+
+            nav a {
+                font-size: 1rem;
+            }
+
+            .history-table td:first-child {
+                width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a id="nav-home" class="active" onclick="showPage('home')">ホーム</a></li>
+            <li><a id="nav-business" onclick="showPage('business')">事業内容</a></li>
+            <li><a id="nav-company" onclick="showPage('company')">会社概要</a></li>
+            <li><a id="nav-contact" onclick="showPage('contact')">お問い合わせ</a></li>
+        </ul>
+    </nav>
+
+    <!-- ホームページ -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <h1>SWE株式会社</h1>
+            <p>エステティックサロン・入管手続き・留学生紹介・飲食事業</p>
+        </div>
+        <div class="container">
+            <div class="section">
+                <h2>ようこそ</h2>
+                <p style="font-size: 1.1rem; line-height: 1.8;">
+                    SWE株式会社は、エステティックサロンの運営を中心に、外国人の在留資格に関する入管手続き、
+                    ミャンマー人留学生の日本国内学校への紹介事業、飲食店の運営など、多岐にわたるサービスを提供しております。
+                    2023年の設立以来、お客様のニーズに合わせた質の高いサービスをご提供することを心がけております。
+                </p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>エステティックサロン</h3>
+                    <p>SWE SPA Wellness & Estheticでは、お客様の美と健康をサポートする各種エステティックサービスを提供しております。</p>
+                </div>
+                <div class="service-card">
+                    <h3>入管手続きサポート</h3>
+                    <p>外国人の在留資格取得や更新など、入管手続きに関する専門的なサポートを行っております。</p>
+                </div>
+                <div class="service-card">
+                    <h3>留学生紹介事業</h3>
+                    <p>ミャンマー人留学生の日本国内学校への紹介や、留学に関する各種サポートを提供しております。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 事業内容ページ -->
+    <div id="business" class="page">
+        <div class="hero">
+            <h1>事業内容</h1>
+            <p>多様なニーズに応える総合サービス</p>
+        </div>
+        <div class="container">
+            <div class="section">
+                <h2>当社の事業</h2>
+                <div class="business-list">
+                    <ul>
+                        <li>エステティックサロン及びエステ関係セミナーの運営</li>
+                        <li>外国人の在留資格等入管手続き及び各種法的サービス</li>
+                        <li>日本国内学校へのミャンマー人留学生の紹介事業</li>
+                        <li>飲食店の運営（2026年2月に店舗オープン予定）</li>
+                        <li>旅行手配サービス（予定）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>エステティックサロン及びセミナー運営</h3>
+                <p>
+                    文京区千石と北区本駒込に「SWE SPA Wellness & Esthetic」を展開し、
+                    お客様の美容と健康をサポートする各種トリートメントを提供しております。
+                    また、「SWE WELLNESS ACADEMY」を開講し、エステティック技術の教育にも力を入れております。
+                </p>
+
+                <h3>入管手続き及び法的サービス</h3>
+                <p>
+                    外国人の在留資格取得、更新、変更などの入管手続きをサポートいたします。
+                    経験豊富なスタッフが、お客様の状況に応じた適切なアドバイスと手続き代行を行います。
+                </p>
+
+                <h3>留学生紹介事業</h3>
+                <p>
+                    ミャンマー人留学生の日本国内の学校への紹介事業を行っております。
+                    学生の夢の実現をサポートし、日本とミャンマーの架け橋となることを目指しております。
+                </p>
+
+                <h3>飲食店運営（予定）</h3>
+                <p>
+                    2026年2月に新規飲食店のオープンを予定しております。
+                    詳細は決まり次第、当ウェブサイトにてお知らせいたします。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 会社概要ページ -->
+    <div id="company" class="page">
+        <div class="hero">
+            <h1>会社概要</h1>
+            <p>SWE株式会社について</p>
+        </div>
+        <div class="container">
+            <div class="section">
+                <h2>沿革</h2>
+                <table class="history-table">
+                    <tr>
+                        <td>2023年（令和5年）9月</td>
+                        <td>東京都江戸川区に会社設立</td>
+                    </tr>
+                    <tr>
+                        <td>2024年（令和6年）4月</td>
+                        <td>文京区千石にSWE SPA Wellness & Estheticを開設。同所に本店移転</td>
+                    </tr>
+                    <tr>
+                        <td>2025年（令和7年）6月</td>
+                        <td>東京都北区本駒込にSWE SPA & WELLNESSを開設</td>
+                    </tr>
+                    <tr>
+                        <td>2025年（令和7年）10月</td>
+                        <td>東京都北区中里に駒込事務所を開設</td>
+                    </tr>
+                    <tr>
+                        <td>2025年（令和7年）11月</td>
+                        <td>SWE WELLNESS ACADEMYを開講</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>会社情報</h2>
+                <div class="info-box">
+                    <p><strong>従業員数：</strong>　　　人</p>
+                    <p><strong>2024年売上高：</strong>8,827,600円</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>所在地</h2>
+                <div class="info-box">
+                    <h3 style="margin-top: 0;">本社</h3>
+                    <p>〒112-0011<br>
+                    東京都文京区千石四丁目25番2号 蔵とまきの郷桜5号室</p>
+                    
+                    <h3>駒込事務所</h3>
+                    <p>東京都北区中里～</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- お問い合わせページ -->
+    <div id="contact" class="page">
+        <div class="hero">
+            <h1>お問い合わせ</h1>
+            <p>ご質問・ご相談はこちらから</p>
+        </div>
+        <div class="container">
+            <form class="contact-form" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="name">お名前 <span style="color: red;">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">メールアドレス <span style="color: red;">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">電話番号</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="subject">お問い合わせ内容 <span style="color: red;">*</span></label>
+                    <select id="subject" name="subject" required>
+                        <option value="">選択してください</option>
+                        <option value="spa">エステティックサロンについて</option>
+                        <option value="immigration">入管手続きについて</option>
+                        <option value="student">留学生紹介について</option>
+                        <option value="restaurant">飲食店について</option>
+                        <option value="other">その他</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">メッセージ <span style="color: red;">*</span></label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit">送信する</button>
+            </form>
+
+            <div class="info-box" style="margin-top: 3rem;">
+                <h3 style="margin-top: 0; color: #2c5f4f;">お問い合わせ先</h3>
+                <p><strong>本社：</strong>東京都文京区千石四丁目25番2号 蔵とまきの郷桜5号室</p>
+                <p><strong>駒込事務所：</strong>東京都北区中里～</p>
+                <p><strong>メールアドレス：</strong>info@swe-company.com（仮）</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 SWE株式会社 All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => link.classList.remove('active'));
+            document.getElementById('nav-' + pageId).classList.add('active');
+            
+            window.scrollTo(0, 0);
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('お問い合わせありがとうございます。\n内容を確認次第、担当者よりご連絡させていただきます。');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
